@@ -14,8 +14,14 @@ var moveVector : Vector2
 var faceDir : float = 0
 var doDash : float
 var doAtk : float
+var onFloor : bool = true
 
 func _physics_process(delta: float) -> void:
+	
+	if not is_on_floor():
+		coyoteTime()
+	else:
+		onFloor = true
 	
 	if controller:
 		moveVector = controller.controlVector
@@ -28,8 +34,9 @@ func _physics_process(delta: float) -> void:
 		velocity += get_gravity() * delta * weight
 
 	# Handle jump.
-	if moveVector.y > 0 and is_on_floor():
+	if moveVector.y > 0 and onFloor:
 		velocity.y = jumpSpeed
+		onFloor = false
 
 	if doAtk > 0:
 		attack.monitoring = true
@@ -60,3 +67,9 @@ func _physics_process(delta: float) -> void:
 			anim.play("idle")
 
 	move_and_slide()
+	
+func coyoteTime() -> void:
+	
+	await get_tree().create_timer(0.2).timeout
+	if is_on_floor() == false:
+		onFloor = false

@@ -1,16 +1,15 @@
-[gd_scene load_steps=12 format=3 uid="uid://fkyo8uej76r5"]
+[gd_scene load_steps=15 format=3 uid="uid://fkyo8uej76r5"]
 
-[ext_resource type="PackedScene" uid="uid://jaa1h8imkys0" path="res://Mobs/Player/player_entity.tscn" id="1_oq1i5"]
-[ext_resource type="PackedScene" uid="uid://cif8d5drn2qda" path="res://Components/health_component.tscn" id="2_h21bk"]
+[ext_resource type="PackedScene" uid="uid://jaa1h8imkys0" path="res://Mobs/Player/player_entity.tscn" id="1_kcvuh"]
+[ext_resource type="PackedScene" uid="uid://cif8d5drn2qda" path="res://Components/health_component.tscn" id="2_4usyu"]
+[ext_resource type="PackedScene" uid="uid://mf1q3at5o675" path="res://Objects/platform.tscn" id="2_70ur6"]
+[ext_resource type="Script" uid="uid://dfsqov7eulh2q" path="res://Scenes/Dev/camera_follow.gd" id="2_v1o00"]
+[ext_resource type="PackedScene" uid="uid://bnu1pi76l4tsl" path="res://Objects/sign.tscn" id="3_4usyu"]
+[ext_resource type="Script" uid="uid://dye8rfpdk8plr" path="res://Scenes/Dev/escape.gd" id="6_7u3ud"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_h21bk"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_oq1i5"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_oq1i5"]
-size = Vector2(56.4375, 8)
-
-[sub_resource type="QuadMesh" id="QuadMesh_h21bk"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ybjcv"]
 
@@ -23,9 +22,12 @@ size = Vector2(56.4375, 8)
 [sub_resource type="CircleShape2D" id="CircleShape2D_8xidb"]
 radius = 0.533333
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fdruc"]
+size = Vector2(390, 117)
+
 [node name="TestingScene" type="Node2D"]
 
-[node name="PlayerEntity" parent="." instance=ExtResource("1_oq1i5")]
+[node name="PlayerEntity" parent="." instance=ExtResource("1_kcvuh")]
 position = Vector2(-84, -11)
 
 [node name="SceneObjects" type="Node2D" parent="."]
@@ -37,61 +39,30 @@ modulate = Color(0.439049, 0.439049, 0.439049, 1)
 shape = SubResource("WorldBoundaryShape2D_h21bk")
 
 [node name="MeshInstance2D" type="MeshInstance2D" parent="SceneObjects/Floor"]
-position = Vector2(-1.49999, 1)
-scale = Vector2(209, 4)
+position = Vector2(17.5, 104.5)
+scale = Vector2(551, 211)
 mesh = SubResource("QuadMesh_oq1i5")
 
-[node name="Platform" type="StaticBody2D" parent="SceneObjects"]
-modulate = Color(0.439049, 0.439049, 0.439049, 1)
-position = Vector2(-73, -41)
+[node name="Platform" parent="SceneObjects" instance=ExtResource("2_70ur6")]
+position = Vector2(-66, -41)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="SceneObjects/Platform"]
-position = Vector2(9.125, 0)
-shape = SubResource("RectangleShape2D_oq1i5")
+[node name="Platform2" parent="SceneObjects" instance=ExtResource("2_70ur6")]
+position = Vector2(0, -77)
 
-[node name="MeshInstance2D" type="MeshInstance2D" parent="SceneObjects/Platform"]
-position = Vector2(9, -2.38419e-07)
-scale = Vector2(70, 8)
-mesh = SubResource("QuadMesh_h21bk")
+[node name="Platform3" parent="SceneObjects" instance=ExtResource("2_70ur6")]
+position = Vector2(80, -118)
 
-[node name="Platform2" type="StaticBody2D" parent="SceneObjects"]
-modulate = Color(0.439049, 0.439049, 0.439049, 1)
-position = Vector2(14, -76)
+[node name="Platform4" parent="SceneObjects" instance=ExtResource("2_70ur6")]
+position = Vector2(-87, -156)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="SceneObjects/Platform2"]
-position = Vector2(9.125, 0)
-shape = SubResource("RectangleShape2D_oq1i5")
+[node name="Platform5" parent="SceneObjects" instance=ExtResource("2_70ur6")]
+position = Vector2(0, -198)
 
-[node name="MeshInstance2D" type="MeshInstance2D" parent="SceneObjects/Platform2"]
-position = Vector2(9, -2.38419e-07)
-scale = Vector2(70, 8)
-mesh = SubResource("QuadMesh_h21bk")
+[node name="Platform6" parent="SceneObjects" instance=ExtResource("2_70ur6")]
+position = Vector2(-70, -245)
 
-[node name="Platform3" type="StaticBody2D" parent="SceneObjects"]
-modulate = Color(0.439049, 0.439049, 0.439049, 1)
-position = Vector2(56, -117)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="SceneObjects/Platform3"]
-position = Vector2(15.2188, 0)
-shape = SubResource("RectangleShape2D_oq1i5")
-
-[node name="MeshInstance2D" type="MeshInstance2D" parent="SceneObjects/Platform3"]
-position = Vector2(15.5, -2.38419e-07)
-scale = Vector2(57, 8)
-mesh = SubResource("QuadMesh_h21bk")
-
-[node name="Platform4" type="StaticBody2D" parent="SceneObjects"]
-modulate = Color(0.439049, 0.439049, 0.439049, 1)
-position = Vector2(-74, -144)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="SceneObjects/Platform4"]
-position = Vector2(8.5625, 0)
-shape = SubResource("RectangleShape2D_oq1i5")
-
-[node name="MeshInstance2D" type="MeshInstance2D" parent="SceneObjects/Platform4"]
-position = Vector2(5.5, -2.38419e-07)
-scale = Vector2(63, 8)
-mesh = SubResource("QuadMesh_h21bk")
+[node name="Platform7" parent="SceneObjects" instance=ExtResource("2_70ur6")]
+position = Vector2(76, -245)
 
 [node name="LeftWall" type="StaticBody2D" parent="SceneObjects"]
 modulate = Color(0.439049, 0.439049, 0.439049, 1)
@@ -102,9 +73,9 @@ rotation = 1.5708
 shape = SubResource("WorldBoundaryShape2D_ybjcv")
 
 [node name="MeshInstance2D2" type="MeshInstance2D" parent="SceneObjects/LeftWall"]
-position = Vector2(-128, 73)
+position = Vector2(-385.25, 73.0009)
 rotation = -1.5708
-scale = Vector2(149, 265)
+scale = Vector2(149, 779.5)
 mesh = SubResource("QuadMesh_oq1i5")
 
 [node name="RightWall" type="StaticBody2D" parent="SceneObjects"]
@@ -116,28 +87,87 @@ rotation = -1.5708
 shape = SubResource("WorldBoundaryShape2D_s6pog")
 
 [node name="MeshInstance2D3" type="MeshInstance2D" parent="SceneObjects/RightWall"]
-position = Vector2(129, 72)
+position = Vector2(381.75, 72.0009)
 rotation = 1.5708
-scale = Vector2(146, 265)
+scale = Vector2(146, 770.5)
 mesh = SubResource("QuadMesh_oq1i5")
 
 [node name="MeshInstance2D" type="MeshInstance2D" parent="SceneObjects"]
 modulate = Color(0.259294, 0.259294, 0.259294, 1)
 z_index = -1
-position = Vector2(10, -388)
+position = Vector2(0, -378)
 scale = Vector2(395, 778.5)
 mesh = SubResource("QuadMesh_ybjcv")
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Platform8" parent="SceneObjects" instance=ExtResource("2_70ur6")]
+position = Vector2(0.5, -365)
+
+[node name="Platform10" parent="SceneObjects" instance=ExtResource("2_70ur6")]
+position = Vector2(-65, -365)
+
+[node name="Platform11" parent="SceneObjects" instance=ExtResource("2_70ur6")]
+position = Vector2(-68, -407)
+
+[node name="Platform12" parent="SceneObjects" instance=ExtResource("2_70ur6")]
+position = Vector2(95, -425)
+
+[node name="Platform9" parent="SceneObjects" instance=ExtResource("2_70ur6")]
+position = Vector2(0.5, -308)
+
+[node name="Sign" parent="SceneObjects" instance=ExtResource("3_4usyu")]
+position = Vector2(0.5, -322)
+detailText = "Press 'r' to attack and deal damage to objects and enemies. Try attacking that box up there."
+
+[node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("target")]
 position = Vector2(0, -120)
 zoom = Vector2(2.64, 2.64)
+script = ExtResource("2_v1o00")
+target = NodePath("../PlayerEntity")
 
 [node name="MeshInstance2D" type="MeshInstance2D" parent="."]
-position = Vector2(-45, -16)
+position = Vector2(1.5, -376)
 scale = Vector2(15, 14)
 mesh = SubResource("QuadMesh_s6pog")
 
-[node name="HealthComponent" parent="MeshInstance2D" instance=ExtResource("2_h21bk")]
+[node name="HealthComponent" parent="MeshInstance2D" instance=ExtResource("2_4usyu")]
+maxHealth = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MeshInstance2D/HealthComponent"]
 shape = SubResource("CircleShape2D_8xidb")
+
+[node name="Sign" parent="." instance=ExtResource("3_4usyu")]
+position = Vector2(-57, -11)
+detailText = "Press 'a' and 'd', or 'left arrow' and 'right arrow' to move left and right."
+
+[node name="Sign2" parent="." instance=ExtResource("3_4usyu")]
+position = Vector2(39, -10)
+detailText = "Press 'w' or 'up arrow' to jump up and reach platforms."
+
+[node name="Sign3" parent="." instance=ExtResource("3_4usyu")]
+position = Vector2(71, -131)
+detailText = "Press 'spacebar' to dash across gaps and dodge attacks from enemies. (1 second cooldown between dashes.)"
+
+[node name="Platform" parent="." instance=ExtResource("2_70ur6")]
+position = Vector2(-100, -283)
+
+[node name="Platform2" parent="." instance=ExtResource("2_70ur6")]
+position = Vector2(101, -332)
+
+[node name="Platform3" parent="." instance=ExtResource("2_70ur6")]
+position = Vector2(50, -283)
+scale = Vector2(0.239999, 1)
+
+[node name="Sign4" parent="." instance=ExtResource("3_4usyu")]
+position = Vector2(86, -439)
+detailText = "You finished the tutorial, good job! Press 'escape' to return to the main menu."
+
+[node name="Escape" type="Area2D" parent="."]
+position = Vector2(-1, -438)
+script = ExtResource("6_7u3ud")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Escape"]
+position = Vector2(7, -48.5)
+shape = SubResource("RectangleShape2D_fdruc")
+
+[connection signal="body_entered" from="Escape" to="Escape" method="_on_body_entered"]
+[connection signal="body_exited" from="Escape" to="Escape" method="_on_body_exited"]

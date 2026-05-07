@@ -14,7 +14,7 @@ func _ready():
 func adjustHealth(amt : int):
 	
 	health += amt
-	print(health)
+	#print(health)
 	
 	if health <= 0:
 		print("dead")

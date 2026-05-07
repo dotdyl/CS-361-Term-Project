@@ -1,0 +1,67 @@
+[gd_scene load_steps=5 format=3 uid="uid://bnu1pi76l4tsl"]
+
+[ext_resource type="Script" uid="uid://bssvafm5pcfaa" path="res://Objects/sign.gd" id="1_r0c6u"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r0c6u"]
+size = Vector2(50, 36)
+
+[sub_resource type="QuadMesh" id="QuadMesh_v1o00"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_70ur6"]
+
+[node name="Sign" type="Area2D" node_paths=PackedStringArray("promptPanel", "detailPanel", "promptLabel", "detailLabel")]
+script = ExtResource("1_r0c6u")
+promptPanel = NodePath("Panel2")
+detailPanel = NodePath("Panel")
+promptLabel = NodePath("Panel2/Label")
+detailLabel = NodePath("Panel/Label2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -8)
+shape = SubResource("RectangleShape2D_r0c6u")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
+position = Vector2(4.76837e-07, 3)
+scale = Vector2(4, 14)
+mesh = SubResource("QuadMesh_v1o00")
+
+[node name="MeshInstance2D2" type="MeshInstance2D" parent="."]
+position = Vector2(-4.76837e-07, -3)
+scale = Vector2(18, 8)
+mesh = SubResource("QuadMesh_70ur6")
+
+[node name="Panel" type="Panel" parent="."]
+visible = false
+offset_left = -33.0
+offset_top = -38.0
+offset_right = 35.0
+offset_bottom = 2.0
+
+[node name="Label2" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 2.00001
+offset_top = 3.00001
+offset_right = 212.0
+offset_bottom = 119.0
+scale = Vector2(0.300614, 0.300614)
+text = "Test label"
+autowrap_mode = 2
+
+[node name="Panel2" type="Panel" parent="."]
+visible = false
+offset_left = -16.0
+offset_top = -22.0
+offset_right = 18.0
+offset_bottom = -9.0
+
+[node name="Label" type="Label" parent="Panel2"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 3.0
+offset_right = 99.0
+offset_bottom = 26.0
+scale = Vector2(0.310282, 0.310282)
+text = "'E'to interact"
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="area_exited" from="." to="." method="_on_area_exited"]

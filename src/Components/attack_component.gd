@@ -15,7 +15,7 @@ func emitAttack(atk : Attack, hth : HealthComponent):
 
 func _on_area_entered(area):
 	
-	print("Detected")
+	#print("Detected")
 	if area is HealthComponent and area.get_parent() != parent:
 		var newAtk = Attack.new()
 		newAtk.damage = -1
