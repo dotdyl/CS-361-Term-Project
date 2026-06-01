@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="StateSignalSwitcher" load_steps=2 format=3 uid="uid://bsxhtoexh1d1b"]
+
+[ext_resource type="Script" uid="uid://7yimqqtjorwo" path="res://Mobs/MobScripts/StateMachine/state_singal_switcher.gd" id="1_hor1b"]
+
+[resource]
+script = ExtResource("1_hor1b")
+node_name = "DetectionComponent"
+signal_name = "detected"
+acceptable_states = Array[String](["Idle", "Wander"])
+target_state = "Chase"
+metadata/_custom_type_script = "uid://7yimqqtjorwo"

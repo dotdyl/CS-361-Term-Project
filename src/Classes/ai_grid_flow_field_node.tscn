@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://gi28vnv7a864"]
+
+[ext_resource type="Script" uid="uid://uxocp6ugn0fp" path="res://Classes/ai_grid_flow_field_node.gd" id="1_vauc1"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_vauc1"]
+size = Vector2(5, 5)
+
+[sub_resource type="QuadMesh" id="QuadMesh_352vr"]
+size = Vector2(5, 1)
+
+[node name="AiGridFlowFieldNode" type="Node2D" node_paths=PackedStringArray("debug_node", "debug_arrow")]
+script = ExtResource("1_vauc1")
+debug_node = NodePath("DebugMesh")
+debug_arrow = NodePath("DebugArrow")
+
+[node name="DebugMesh" type="MeshInstance2D" parent="."]
+mesh = SubResource("QuadMesh_vauc1")
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+unique_name_in_owner = true
+target_position = Vector2(0, 12)
+
+[node name="DebugArrow" type="Node2D" parent="."]
+
+[node name="MeshInstance2D2" type="MeshInstance2D" parent="DebugArrow"]
+position = Vector2(3, 0)
+mesh = SubResource("QuadMesh_352vr")

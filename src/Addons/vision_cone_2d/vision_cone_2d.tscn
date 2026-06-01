@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3 uid="uid://kf8tqdlm8c5t"]
+
+[ext_resource type="Script" uid="uid://bo744wpycscqd" path="res://Addons/vision_cone_2d/vision_cone_2d.gd" id="1_vadie"]
+[ext_resource type="Script" uid="uid://b88iifj2svjwc" path="res://Addons/vision_cone_2d/cone_editor_helper.gd" id="2_ejd67"]
+
+[node name="VisionCone2D" type="Node2D" node_paths=PackedStringArray("write_collision_polygon", "vision_cone_area", "write_polygon2d")]
+rotation = -1.5708
+script = ExtResource("1_vadie")
+collision_layer_mask = 2
+write_collision_polygon = NodePath("VisionConeArea/VisionConeCollider")
+vision_cone_area = NodePath("VisionConeArea")
+write_polygon2d = NodePath("VisionConeRenderer")
+
+[node name="VisionConeRenderer" type="Polygon2D" parent="."]
+color = Color(0.431373, 0.929412, 0.278431, 0.286275)
+
+[node name="VisionConeArea" type="Area2D" parent="."]
+unique_name_in_owner = true
+collision_layer = 0
+monitorable = false
+
+[node name="VisionConeCollider" type="CollisionPolygon2D" parent="VisionConeArea"]
+
+[node name="DebugDraw" type="Node2D" parent="."]
+script = ExtResource("2_ejd67")
