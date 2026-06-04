@@ -1,0 +1,47 @@
+[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://w07yhe46sn2y"]
+
+[ext_resource type="Texture2D" uid="uid://c8i7qdngonvri" path="res://Assets/Sprites/Environment Tileset.png" id="1_e46lh"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_q6koc"]
+texture = ExtResource("1_e46lh")
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+1:0/0 = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+2:0/0 = 0
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+3:0/0 = 0
+3:0/0/custom_data_0 = true
+4:0/0 = 0
+5:0/0 = 0
+5:0/0/custom_data_1 = 1
+6:0/0 = 0
+6:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -1.07915, -8, -1.43887)
+6:0/0/physics_layer_0/polygon_0/one_way = true
+7:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+2:1/0/custom_data_2 = true
+3:1/animation_columns = 4
+3:1/animation_speed = 5.0
+3:1/animation_frame_0/duration = 1.0
+3:1/animation_frame_1/duration = 1.0
+3:1/animation_frame_2/duration = 1.0
+3:1/animation_frame_3/duration = 1.0
+3:1/0 = 0
+3:1/0/custom_data_2 = true
+3:1/0/custom_data_3 = true
+
+[resource]
+physics_layer_0/collision_layer = 1
+navigation_layer_0/layers = 1
+custom_data_layer_0/name = "climbable"
+custom_data_layer_0/type = 1
+custom_data_layer_1/name = "damaging"
+custom_data_layer_1/type = 2
+custom_data_layer_2/name = "fire"
+custom_data_layer_2/type = 1
+custom_data_layer_3/name = "lit_fire"
+custom_data_layer_3/type = 1
+sources/0 = SubResource("TileSetAtlasSource_q6koc")

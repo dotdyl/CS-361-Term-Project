@@ -3,6 +3,9 @@ class_name StateMachine
 
 @export var state_signal_switchers : Array[StateSignalSwitcher] = []
 @export var initial_state : State
+
+@export var state_label : Label
+
 var state : State
 
 signal transitioned(state_name)
@@ -16,9 +19,7 @@ func _ready():
 	state.enter()
 	
 	for switcher in state_signal_switchers:
-		
 		var node = get_node("../" + switcher.node_name)
-		
 		if node:
 			node.connect(switcher.signal_name, state_signal_switch.bind(switcher.acceptable_states, switcher.target_state))
 	
@@ -40,6 +41,9 @@ func transition_to(target_state_name: String, msg := {}):
 		#print("Can't find state with target namea")
 		return
 		
+	if state_label:
+		state_label.text = target_state_name
+		
 	state.exit()
 	state = get_node(target_state_name)
 	state.enter(msg)
@@ -49,7 +53,7 @@ func transition_to(target_state_name: String, msg := {}):
 func state_signal_switch(msg : Dictionary, acceptable_states : Array[String], target_state_name : String):
 	
 	#print("State switch from signald")
-	if !acceptable_states.has(state.name):
+	if !acceptable_states.has(state.name) and acceptable_states.size() != 0:
 		#print("Can't force switch from this state")
 		return
 		

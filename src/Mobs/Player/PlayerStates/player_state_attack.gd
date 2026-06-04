@@ -11,7 +11,7 @@ extends PlayerState
 var action_pressed = false
 
 func enter(msg := {}):
-	attack_component.monitoring = true
+	attack_component.enable()
 	attack_component.attack = attack
 	
 	player.sprite.play(animation_name)
@@ -41,4 +41,5 @@ func physics_update(delta : float):
 		state_machine.transition_to("Idle")
 
 func exit():
-	attack_component.monitoring = false
+	attack_component.disable()
+	player.ready_for_input()

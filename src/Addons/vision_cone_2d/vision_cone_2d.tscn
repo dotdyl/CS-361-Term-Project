@@ -12,6 +12,7 @@ vision_cone_area = NodePath("VisionConeArea")
 write_polygon2d = NodePath("VisionConeRenderer")
 
 [node name="VisionConeRenderer" type="Polygon2D" parent="."]
+visible = false
 color = Color(0.431373, 0.929412, 0.278431, 0.286275)
 
 [node name="VisionConeArea" type="Area2D" parent="."]

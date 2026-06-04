@@ -1,65 +1,91 @@
-[gd_scene load_steps=20 format=3 uid="uid://jaa1h8imkys0"]
+[gd_scene load_steps=27 format=3 uid="uid://jaa1h8imkys0"]
 
 [ext_resource type="Script" uid="uid://dkjh3ywfivkdy" path="res://Mobs/MobScripts/mob_controllable.gd" id="1_ey1bj"]
 [ext_resource type="Script" uid="uid://ceg8bj68uhu1n" path="res://Scripts/animated_sprite_2d_manager.gd" id="2_b2c60"]
 [ext_resource type="SpriteFrames" uid="uid://b8lo6o2s84o1" path="res://Mobs/Player/Animations/player_character_animations.tres" id="3_wcmd6"]
 [ext_resource type="PackedScene" uid="uid://cif8d5drn2qda" path="res://Components/health_component.tscn" id="4_0mfeu"]
 [ext_resource type="SpriteFrames" uid="uid://njrgshpkuq2u" path="res://Mobs/Player/Animations/player_sword_animations.tres" id="4_f37nq"]
+[ext_resource type="SpriteFrames" uid="uid://b3kddcchjwtov" path="res://Mobs/Player/Animations/player_attack_slash.tres" id="5_8g0s3"]
 [ext_resource type="PackedScene" uid="uid://vqc0p1fle7no" path="res://Components/attack_component.tscn" id="5_pdoq2"]
 [ext_resource type="Script" uid="uid://o61yl015cpcx" path="res://Mobs/Player/PlayerStates/player_state_idle.gd" id="6_ey1bj"]
 [ext_resource type="Script" uid="uid://cekbh2v5ig1i0" path="res://Mobs/MobScripts/StateMachine/state_machine.gd" id="6_x1vuv"]
 [ext_resource type="Script" uid="uid://b27jup23tliir" path="res://Mobs/Player/PlayerStates/player_state_run.gd" id="7_4s5pc"]
 [ext_resource type="Script" uid="uid://4m44jkpwcdrt" path="res://Mobs/Player/PlayerStates/player_state_air.gd" id="8_b2c60"]
 [ext_resource type="Script" uid="uid://cum076kfeidq6" path="res://Mobs/Player/PlayerStates/player_state_dash.gd" id="9_4s5pc"]
+[ext_resource type="Script" uid="uid://7yimqqtjorwo" path="res://Mobs/MobScripts/StateMachine/state_singal_switcher.gd" id="9_we8h8"]
+[ext_resource type="Script" uid="uid://couwj2j1ltbm3" path="res://Components/ComponentScripts/tilemap_detector_signals.gd" id="10_nvumq"]
 [ext_resource type="Script" uid="uid://wblvff0ay68h" path="res://Mobs/Player/PlayerStates/player_state_attack.gd" id="12_f37nq"]
 [ext_resource type="Resource" uid="uid://clrmk0pkro74k" path="res://Mobs/Player/Attacks/player_attack_basic.tres" id="13_b0j1j"]
 [ext_resource type="Resource" uid="uid://bjntdu5onmye1" path="res://Mobs/Player/Attacks/player_attack_heavy.tres" id="14_wsgxo"]
 [ext_resource type="Script" uid="uid://b3ajarkt8t6dv" path="res://Components/ComponentScripts/detectable_component.gd" id="15_wsgxo"]
+[ext_resource type="Script" uid="uid://c5t1dbxto0g51" path="res://Mobs/Player/PlayerStates/player_state_hit.gd" id="16_13ev6"]
+[ext_resource type="PackedScene" uid="uid://d3mfhqw18eevf" path="res://Components/tilemap_detector.tscn" id="19_1xy1s"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_170cn"]
-size = Vector2(8, 4)
+size = Vector2(6, 16)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0mfeu"]
-size = Vector2(17, 16)
+size = Vector2(16, 16)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jp882"]
-size = Vector2(19, 18)
+size = Vector2(14, 16)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_13ev6"]
 radius = 7.0
 
-[node name="PlayerEntity" type="CharacterBody2D" node_paths=PackedStringArray("nodes_to_flip_pos")]
+[sub_resource type="Resource" id="Resource_bll2i"]
+script = ExtResource("10_nvumq")
+tile_map_target_data = "damaging"
+node_name = "HealthComponent"
+function_name = "simple_damage"
+metadata/_custom_type_script = "uid://couwj2j1ltbm3"
+
+[sub_resource type="Resource" id="Resource_8g0s3"]
+script = ExtResource("9_we8h8")
+node_name = "HealthComponent"
+signal_name = "damaged"
+acceptable_states = Array[String]([])
+target_state = "Hit"
+metadata/_custom_type_script = "uid://7yimqqtjorwo"
+
+[node name="PlayerEntity" type="CharacterBody2D" node_paths=PackedStringArray("nodes_to_flip_pos") groups=["ally"]]
 script = ExtResource("1_ey1bj")
-nodes_to_flip_pos = [NodePath("AttackComponent")]
+nodes_to_flip_pos = [NodePath("AttackComponent"), NodePath("CompositeAnimatedSprite2D/Slash")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 6)
+position = Vector2(-1, 0)
 shape = SubResource("RectangleShape2D_170cn")
 
-[node name="CompositveAnimatedSprite2D" type="Node2D" parent="."]
+[node name="CompositeAnimatedSprite2D" type="Node2D" parent="."]
 unique_name_in_owner = true
 script = ExtResource("2_b2c60")
 
-[node name="Character" type="AnimatedSprite2D" parent="CompositveAnimatedSprite2D"]
+[node name="Character" type="AnimatedSprite2D" parent="CompositeAnimatedSprite2D"]
 sprite_frames = ExtResource("3_wcmd6")
 animation = &"attack3"
 
-[node name="Sword" type="AnimatedSprite2D" parent="CompositveAnimatedSprite2D"]
+[node name="Sword" type="AnimatedSprite2D" parent="CompositeAnimatedSprite2D"]
 sprite_frames = ExtResource("4_f37nq")
 animation = &"attack1"
 
+[node name="Slash" type="AnimatedSprite2D" parent="CompositeAnimatedSprite2D"]
+position = Vector2(8, 0)
+sprite_frames = ExtResource("5_8g0s3")
+
 [node name="HealthComponent" parent="." instance=ExtResource("4_0mfeu")]
+unique_name_in_owner = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HealthComponent"]
 shape = SubResource("RectangleShape2D_0mfeu")
 
 [node name="AttackComponent" parent="." instance=ExtResource("5_pdoq2")]
 unique_name_in_owner = true
-position = Vector2(14, 0)
+position = Vector2(9, 0)
+collision_mask = 3
 monitoring = false
+monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackComponent"]
-position = Vector2(2, -1)
 shape = SubResource("RectangleShape2D_jp882")
 
 [node name="DetectableComponent" type="Area2D" parent="."]
@@ -69,9 +95,14 @@ metadata/_custom_type_script = "uid://b3ajarkt8t6dv"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectableComponent"]
 shape = SubResource("CircleShape2D_13ev6")
 
-[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+[node name="TilemapDetector" parent="." instance=ExtResource("19_1xy1s")]
+tile_map_detector_signals = Array[ExtResource("10_nvumq")]([SubResource("Resource_bll2i")])
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state", "state_label")]
 script = ExtResource("6_x1vuv")
+state_signal_switchers = Array[ExtResource("9_we8h8")]([SubResource("Resource_8g0s3")])
 initial_state = NodePath("Idle")
+state_label = NodePath("../StateLabel")
 
 [node name="Idle" type="Node" parent="StateMachine"]
 script = ExtResource("6_ey1bj")
@@ -101,3 +132,17 @@ attack = ExtResource("13_b0j1j")
 script = ExtResource("12_f37nq")
 animation_name = "attack3"
 attack = ExtResource("14_wsgxo")
+
+[node name="Hit" type="Node" parent="StateMachine"]
+script = ExtResource("16_13ev6")
+staggered_time = 0.1
+
+[node name="StateLabel" type="Label" parent="."]
+visible = false
+offset_left = -11.0
+offset_top = -14.0
+offset_right = 677.0
+offset_bottom = 132.0
+scale = Vector2(0.0342475, 0.0342475)
+theme_override_font_sizes/font_size = 106
+text = "Current State"

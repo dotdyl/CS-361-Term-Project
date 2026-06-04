@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://d3mfhqw18eevf"]
+
+[ext_resource type="Script" uid="uid://cjvhe0tt58ful" path="res://Scripts/tilemap_detector.gd" id="1_v313c"]
+
+[node name="TilemapDetector" type="Node2D"]
+script = ExtResource("1_v313c")

@@ -4,6 +4,7 @@ class_name EdgeDetectorComponent
 var edge_detector_left : RayCast2D
 var edge_detector_right : RayCast2D
 
+var near_edge : bool
 var left_edge : bool
 var right_edge : bool
 
@@ -19,3 +20,8 @@ func _physics_process(delta: float):
 	
 	left_edge = edge_detector_left.is_colliding()
 	right_edge = edge_detector_right.is_colliding()
+	
+	if !left_edge || !right_edge:
+		near_edge = true
+	else:
+		near_edge = false

@@ -1,7 +1,7 @@
 class_name Mob
 extends CharacterBody2D
 
-@onready var sprite: CompositeAnimatedSprite2D = %CompositveAnimatedSprite2D
+@onready var sprite: CompositeAnimatedSprite2D = %CompositeAnimatedSprite2D
 
 @export var nodes_to_flip_pos : Array[Node2D]
 @export var nodes_to_flip_rot : Array [Node2D]
