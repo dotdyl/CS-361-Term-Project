@@ -1,0 +1,45 @@
+[gd_scene load_steps=8 format=3 uid="uid://i4i3a6nmloqr"]
+
+[ext_resource type="Script" uid="uid://dxtkj22qg3kkc" path="res://Objects/flag.gd" id="1_fiuc1"]
+[ext_resource type="Script" uid="uid://ceg8bj68uhu1n" path="res://Scripts/animated_sprite_2d_manager.gd" id="1_xuy75"]
+[ext_resource type="Texture2D" uid="uid://c8i7qdngonvri" path="res://Assets/Sprites/Environment Tileset.png" id="2_fiuc1"]
+[ext_resource type="PackedScene" uid="uid://bp2n684dsp7kq" path="res://Components/interactable_component.tscn" id="3_nkdk4"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5hfuy"]
+atlas = ExtResource("2_fiuc1")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ikjgb"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5hfuy")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rttxj"]
+size = Vector2(48, 24)
+
+[node name="Flag" type="Node2D"]
+script = ExtResource("1_fiuc1")
+
+[node name="CompositeAnimatedSprite2D" type="Node2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, -8)
+script = ExtResource("1_xuy75")
+metadata/_custom_type_script = "uid://ceg8bj68uhu1n"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CompositeAnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_ikjgb")
+
+[node name="InteractableComponent" parent="." instance=ExtResource("3_nkdk4")]
+unique_name_in_owner = true
+position = Vector2(0, -8)
+one_shot = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractableComponent"]
+position = Vector2(0, -4)
+shape = SubResource("RectangleShape2D_rttxj")

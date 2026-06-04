@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://fjwhen5lexnm"]
+
+[node name="PlayerCamera" type="Camera2D"]
+zoom = Vector2(5, 5)
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+drag_left_margin = 1.0
+drag_right_margin = 1.0

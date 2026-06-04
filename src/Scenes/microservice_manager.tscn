@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://cnx3x8h43c3q"]
+
+[ext_resource type="Script" uid="uid://diiduh2ecfm1o" path="res://Scripts/microservice_manager.gd" id="1_b52ab"]
+
+[node name="MicroserviceManager" type="Node"]
+script = ExtResource("1_b52ab")
+microservice_app_names = Array[String](["daily_number.exe"])

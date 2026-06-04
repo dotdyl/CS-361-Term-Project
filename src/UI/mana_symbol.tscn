@@ -1,0 +1,40 @@
+[gd_scene load_steps=5 format=3 uid="uid://b10355rp2n7dw"]
+
+[ext_resource type="Texture2D" uid="uid://dyt5f7wxo7lnt" path="res://Assets/Sprites/effects spritesheet.png" id="1_xfsmg"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mnof0"]
+atlas = ExtResource("1_xfsmg")
+region = Rect2(48, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_724ym"]
+atlas = ExtResource("1_xfsmg")
+region = Rect2(32, 16, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_c4flp"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mnof0")
+}],
+"loop": true,
+"name": &"broken",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_724ym")
+}],
+"loop": true,
+"name": &"full",
+"speed": 5.0
+}]
+
+[node name="ManaSymbol" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-46, 48)
+scale = Vector2(6, 6)
+sprite_frames = SubResource("SpriteFrames_c4flp")
+animation = &"full"

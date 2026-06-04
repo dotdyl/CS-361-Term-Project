@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://jaa1h8imkys0"]
+[gd_scene load_steps=30 format=3 uid="uid://jaa1h8imkys0"]
 
 [ext_resource type="Script" uid="uid://dkjh3ywfivkdy" path="res://Mobs/MobScripts/mob_controllable.gd" id="1_ey1bj"]
 [ext_resource type="Script" uid="uid://ceg8bj68uhu1n" path="res://Scripts/animated_sprite_2d_manager.gd" id="2_b2c60"]
@@ -20,6 +20,9 @@
 [ext_resource type="Script" uid="uid://b3ajarkt8t6dv" path="res://Components/ComponentScripts/detectable_component.gd" id="15_wsgxo"]
 [ext_resource type="Script" uid="uid://c5t1dbxto0g51" path="res://Mobs/Player/PlayerStates/player_state_hit.gd" id="16_13ev6"]
 [ext_resource type="PackedScene" uid="uid://d3mfhqw18eevf" path="res://Components/tilemap_detector.tscn" id="19_1xy1s"]
+[ext_resource type="PackedScene" uid="uid://byiycfo16i6ew" path="res://Scenes/Elements/ui_manager.tscn" id="21_bll2i"]
+[ext_resource type="Script" uid="uid://cyicflq5mimg0" path="res://Mobs/Player/PlayerStates/player_state_ranged_attack.gd" id="22_l57ek"]
+[ext_resource type="Script" uid="uid://chpwl1ykmqs4m" path="res://Components/ComponentScripts/mana_component.gd" id="22_rnok6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_170cn"]
 size = Vector2(6, 16)
@@ -46,18 +49,23 @@ node_name = "HealthComponent"
 signal_name = "damaged"
 acceptable_states = Array[String]([])
 target_state = "Hit"
+no_msg = false
 metadata/_custom_type_script = "uid://7yimqqtjorwo"
 
 [node name="PlayerEntity" type="CharacterBody2D" node_paths=PackedStringArray("nodes_to_flip_pos") groups=["ally"]]
+collision_layer = 17
+collision_mask = 17
 script = ExtResource("1_ey1bj")
 nodes_to_flip_pos = [NodePath("AttackComponent"), NodePath("CompositeAnimatedSprite2D/Slash")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-1, 0)
+unique_name_in_owner = true
+position = Vector2(-1, -8)
 shape = SubResource("RectangleShape2D_170cn")
 
 [node name="CompositeAnimatedSprite2D" type="Node2D" parent="."]
 unique_name_in_owner = true
+position = Vector2(0, -8)
 script = ExtResource("2_b2c60")
 
 [node name="Character" type="AnimatedSprite2D" parent="CompositeAnimatedSprite2D"]
@@ -72,15 +80,20 @@ animation = &"attack1"
 position = Vector2(8, 0)
 sprite_frames = ExtResource("5_8g0s3")
 
+[node name="ManaComponent" type="Node2D" parent="."]
+script = ExtResource("22_rnok6")
+
 [node name="HealthComponent" parent="." instance=ExtResource("4_0mfeu")]
 unique_name_in_owner = true
+position = Vector2(0, -8)
+collision_layer = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HealthComponent"]
 shape = SubResource("RectangleShape2D_0mfeu")
 
 [node name="AttackComponent" parent="." instance=ExtResource("5_pdoq2")]
 unique_name_in_owner = true
-position = Vector2(9, 0)
+position = Vector2(9, -8)
 collision_mask = 3
 monitoring = false
 monitorable = false
@@ -89,6 +102,7 @@ monitorable = false
 shape = SubResource("RectangleShape2D_jp882")
 
 [node name="DetectableComponent" type="Area2D" parent="."]
+position = Vector2(0, -8)
 script = ExtResource("15_wsgxo")
 metadata/_custom_type_script = "uid://b3ajarkt8t6dv"
 
@@ -96,6 +110,7 @@ metadata/_custom_type_script = "uid://b3ajarkt8t6dv"
 shape = SubResource("CircleShape2D_13ev6")
 
 [node name="TilemapDetector" parent="." instance=ExtResource("19_1xy1s")]
+position = Vector2(0, -8)
 tile_map_detector_signals = Array[ExtResource("10_nvumq")]([SubResource("Resource_bll2i")])
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state", "state_label")]
@@ -121,21 +136,29 @@ script = ExtResource("12_f37nq")
 animation_name = "attack1"
 next_state = NodePath("../Attack2")
 attack = ExtResource("13_b0j1j")
+from_zero = true
 
 [node name="Attack2" type="Node" parent="StateMachine" node_paths=PackedStringArray("next_state")]
 script = ExtResource("12_f37nq")
 animation_name = "attack2"
 next_state = NodePath("../Attack3")
 attack = ExtResource("13_b0j1j")
+from_zero = true
 
 [node name="Attack3" type="Node" parent="StateMachine"]
 script = ExtResource("12_f37nq")
 animation_name = "attack3"
 attack = ExtResource("14_wsgxo")
+attack_movement_burst = 50.0
+from_zero = true
 
 [node name="Hit" type="Node" parent="StateMachine"]
 script = ExtResource("16_13ev6")
 staggered_time = 0.1
+
+[node name="RangedAttack" type="Node" parent="StateMachine" node_paths=PackedStringArray("mana_component")]
+script = ExtResource("22_l57ek")
+mana_component = NodePath("../../ManaComponent")
 
 [node name="StateLabel" type="Label" parent="."]
 visible = false
@@ -146,3 +169,7 @@ offset_bottom = 132.0
 scale = Vector2(0.0342475, 0.0342475)
 theme_override_font_sizes/font_size = 106
 text = "Current State"
+
+[node name="CanvasLayer" parent="." node_paths=PackedStringArray("health_component", "mana_component") instance=ExtResource("21_bll2i")]
+health_component = NodePath("../HealthComponent")
+mana_component = NodePath("../ManaComponent")

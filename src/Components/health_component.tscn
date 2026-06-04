@@ -3,4 +3,5 @@
 [ext_resource type="Script" uid="uid://bhvh3ck3ypi5t" path="res://Components/ComponentScripts/health_component.gd" id="1_c2t11"]
 
 [node name="HealthComponent" type="Area2D"]
+collision_layer = 3
 script = ExtResource("1_c2t11")

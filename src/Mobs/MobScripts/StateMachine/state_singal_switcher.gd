@@ -5,3 +5,4 @@ class_name StateSignalSwitcher
 @export var signal_name : String
 @export var acceptable_states : Array[String]
 @export var target_state : String 
+@export var no_msg : bool = false

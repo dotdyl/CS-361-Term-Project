@@ -1,0 +1,47 @@
+[gd_scene load_steps=9 format=3 uid="uid://du5psltq1ssat"]
+
+[ext_resource type="Script" uid="uid://c5r2kvnsfjok0" path="res://Items/fireball.gd" id="1_jas27"]
+[ext_resource type="Texture2D" uid="uid://dyt5f7wxo7lnt" path="res://Assets/Sprites/effects spritesheet.png" id="2_kl678"]
+[ext_resource type="PackedScene" uid="uid://vqc0p1fle7no" path="res://Components/attack_component.tscn" id="3_56xjw"]
+[ext_resource type="Script" uid="uid://bwr0nt83a3y2w" path="res://Resources/attack.gd" id="4_56xjw"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_56xjw"]
+atlas = ExtResource("2_kl678")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_slobl"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_56xjw")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="Resource" id="Resource_slobl"]
+script = ExtResource("4_56xjw")
+damage = 1
+knockback = 5.0
+metadata/_custom_type_script = "uid://bwr0nt83a3y2w"
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_56xjw"]
+
+[node name="Fireball" type="Node2D"]
+script = ExtResource("1_jas27")
+speed = 150.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+unique_name_in_owner = true
+sprite_frames = SubResource("SpriteFrames_slobl")
+
+[node name="AttackComponent" parent="." instance=ExtResource("3_56xjw")]
+unique_name_in_owner = true
+collision_mask = 2
+attack = SubResource("Resource_slobl")
+one_shot = true
+projectile = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackComponent"]
+shape = SubResource("CircleShape2D_56xjw")

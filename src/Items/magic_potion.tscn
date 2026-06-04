@@ -1,0 +1,44 @@
+[gd_scene load_steps=8 format=3 uid="uid://k1c77k2jd462"]
+
+[ext_resource type="Script" uid="uid://ceg8bj68uhu1n" path="res://Scripts/animated_sprite_2d_manager.gd" id="1_d0mxs"]
+[ext_resource type="Script" uid="uid://cxtfqp43c8wqg" path="res://Items/magic_potion.gd" id="1_gq7qp"]
+[ext_resource type="Texture2D" uid="uid://d66guvpbf6fq" path="res://Assets/Sprites/items spritesheet.png" id="2_gq7qp"]
+[ext_resource type="PackedScene" uid="uid://bp2n684dsp7kq" path="res://Components/interactable_component.tscn" id="4_vy5cv"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vy5cv"]
+atlas = ExtResource("2_gq7qp")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tvp57"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vy5cv")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tvp57"]
+radius = 24.0
+
+[node name="MagicPotion" type="Node2D"]
+script = ExtResource("1_gq7qp")
+
+[node name="CompositeAnimatedSprite2D" type="Node2D" parent="."]
+position = Vector2(0, -8)
+script = ExtResource("1_d0mxs")
+metadata/_custom_type_script = "uid://ceg8bj68uhu1n"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CompositeAnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_tvp57")
+
+[node name="InteractableComponent" parent="." instance=ExtResource("4_vy5cv")]
+unique_name_in_owner = true
+position = Vector2(0, -8)
+auto_interact = true
+one_shot = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractableComponent"]
+shape = SubResource("CircleShape2D_tvp57")

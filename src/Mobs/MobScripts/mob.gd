@@ -2,6 +2,7 @@ class_name Mob
 extends CharacterBody2D
 
 @onready var sprite: CompositeAnimatedSprite2D = %CompositeAnimatedSprite2D
+@onready var collision_shape_2d: CollisionShape2D = %CollisionShape2D
 
 @export var nodes_to_flip_pos : Array[Node2D]
 @export var nodes_to_flip_rot : Array [Node2D]

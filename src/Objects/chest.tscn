@@ -1,0 +1,94 @@
+[gd_scene load_steps=16 format=3 uid="uid://jp7725tx18ba"]
+
+[ext_resource type="Script" uid="uid://c8xk4uixwbkn8" path="res://Objects/chest.gd" id="1_7ujht"]
+[ext_resource type="Texture2D" uid="uid://c8i7qdngonvri" path="res://Assets/Sprites/Environment Tileset.png" id="1_s3ywg"]
+[ext_resource type="PackedScene" uid="uid://cif8d5drn2qda" path="res://Components/health_component.tscn" id="2_7ujht"]
+[ext_resource type="Script" uid="uid://ceg8bj68uhu1n" path="res://Scripts/animated_sprite_2d_manager.gd" id="2_ytiat"]
+[ext_resource type="Script" uid="uid://cekbh2v5ig1i0" path="res://Mobs/MobScripts/StateMachine/state_machine.gd" id="4_2upk8"]
+[ext_resource type="Script" uid="uid://cgs03prrpp4uf" path="res://Objects/ObjectStates/object_state_idle.gd" id="5_y40pv"]
+[ext_resource type="Script" uid="uid://7yimqqtjorwo" path="res://Mobs/MobScripts/StateMachine/state_singal_switcher.gd" id="5_ytiat"]
+[ext_resource type="Script" uid="uid://buh34mkbhjyna" path="res://Objects/ObjectStates/object_state_hit.gd" id="6_ytiat"]
+[ext_resource type="Script" uid="uid://dlhm2s7mrw4l" path="res://Objects/ObjectStates/object_state_static.gd" id="9_hn2o6"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_76xd1"]
+atlas = ExtResource("1_s3ywg")
+region = Rect2(112, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3l2ba"]
+atlas = ExtResource("1_s3ywg")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2upk8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_76xd1")
+}],
+"loop": true,
+"name": &"closed",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3l2ba")
+}],
+"loop": true,
+"name": &"open",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y40pv"]
+size = Vector2(16, 16)
+
+[sub_resource type="Resource" id="Resource_hn2o6"]
+script = ExtResource("5_ytiat")
+node_name = "HealthComponent"
+signal_name = "damaged"
+acceptable_states = Array[String](["Idle", "Hit"])
+target_state = "Hit"
+no_msg = false
+metadata/_custom_type_script = "uid://7yimqqtjorwo"
+
+[sub_resource type="Resource" id="Resource_ytiat"]
+script = ExtResource("5_ytiat")
+node_name = "HealthComponent"
+signal_name = "on_death"
+acceptable_states = Array[String]([])
+target_state = "Static"
+no_msg = true
+metadata/_custom_type_script = "uid://7yimqqtjorwo"
+
+[node name="Chest" type="Node2D"]
+script = ExtResource("1_7ujht")
+
+[node name="CompositeAnimatedSprite2D" type="Node2D" parent="."]
+unique_name_in_owner = true
+script = ExtResource("2_ytiat")
+metadata/_custom_type_script = "uid://ceg8bj68uhu1n"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CompositeAnimatedSprite2D"]
+position = Vector2(0, -8)
+sprite_frames = SubResource("SpriteFrames_2upk8")
+animation = &"open"
+
+[node name="HealthComponent" parent="." instance=ExtResource("2_7ujht")]
+unique_name_in_owner = true
+position = Vector2(0, -8)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HealthComponent"]
+shape = SubResource("RectangleShape2D_y40pv")
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("4_2upk8")
+state_signal_switchers = Array[ExtResource("5_ytiat")]([SubResource("Resource_hn2o6"), SubResource("Resource_ytiat")])
+initial_state = NodePath("Idle")
+metadata/_custom_type_script = "uid://cekbh2v5ig1i0"
+
+[node name="Idle" type="Node" parent="StateMachine"]
+script = ExtResource("5_y40pv")
+
+[node name="Hit" type="Node" parent="StateMachine"]
+script = ExtResource("6_ytiat")
+
+[node name="Static" type="Node" parent="StateMachine"]
+script = ExtResource("9_hn2o6")

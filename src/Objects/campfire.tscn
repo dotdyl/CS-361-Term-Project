@@ -1,0 +1,75 @@
+[gd_scene load_steps=11 format=3 uid="uid://3xtqkwcp4bqy"]
+
+[ext_resource type="Script" uid="uid://ubgfsl5nicg7" path="res://Objects/campfire.gd" id="1_okxgk"]
+[ext_resource type="Texture2D" uid="uid://c8i7qdngonvri" path="res://Assets/Sprites/Environment Tileset.png" id="1_yu8je"]
+[ext_resource type="PackedScene" uid="uid://bp2n684dsp7kq" path="res://Components/interactable_component.tscn" id="2_okxgk"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hil2e"]
+atlas = ExtResource("1_yu8je")
+region = Rect2(64, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2k5gg"]
+atlas = ExtResource("1_yu8je")
+region = Rect2(48, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6pug7"]
+atlas = ExtResource("1_yu8je")
+region = Rect2(80, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cvmu1"]
+atlas = ExtResource("1_yu8je")
+region = Rect2(96, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lh6g1"]
+atlas = ExtResource("1_yu8je")
+region = Rect2(32, 16, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_x30ew"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hil2e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2k5gg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6pug7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cvmu1")
+}],
+"loop": true,
+"name": &"lit",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lh6g1")
+}],
+"loop": false,
+"name": &"unlit",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_okxgk"]
+size = Vector2(48, 27)
+
+[node name="Campfire" type="Node2D"]
+script = ExtResource("1_okxgk")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, -8)
+sprite_frames = SubResource("SpriteFrames_x30ew")
+animation = &"lit"
+frame_progress = 0.921206
+
+[node name="InteractableComponent" parent="." instance=ExtResource("2_okxgk")]
+unique_name_in_owner = true
+position = Vector2(0, -8)
+one_shot = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractableComponent"]
+position = Vector2(0, -5.5)
+shape = SubResource("RectangleShape2D_okxgk")

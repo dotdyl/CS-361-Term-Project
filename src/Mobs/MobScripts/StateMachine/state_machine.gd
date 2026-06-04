@@ -21,7 +21,10 @@ func _ready():
 	for switcher in state_signal_switchers:
 		var node = get_node("../" + switcher.node_name)
 		if node:
-			node.connect(switcher.signal_name, state_signal_switch.bind(switcher.acceptable_states, switcher.target_state))
+			if !switcher.no_msg:
+				node.connect(switcher.signal_name, state_signal_switch.bind(switcher.acceptable_states, switcher.target_state))
+			else:
+				node.connect(switcher.signal_name, state_signal_switch_no_msg.bind(switcher.acceptable_states, switcher.target_state))
 	
 func _unhandled_input(event: InputEvent):
 	if state is PlayerState:
@@ -58,3 +61,11 @@ func state_signal_switch(msg : Dictionary, acceptable_states : Array[String], ta
 		return
 		
 	transition_to(target_state_name, msg)
+
+func state_signal_switch_no_msg(acceptable_states : Array[String], target_state_name : String):
+	#print("State switch from signald")
+	if !acceptable_states.has(state.name) and acceptable_states.size() != 0:
+		#print("Can't force switch from this state")
+		return
+		
+	transition_to(target_state_name)

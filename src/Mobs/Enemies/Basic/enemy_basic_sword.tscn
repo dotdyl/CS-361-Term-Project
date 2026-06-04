@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://cr3pq0sv70lnn"]
+[gd_scene load_steps=26 format=3 uid="uid://cr3pq0sv70lnn"]
 
 [ext_resource type="Script" uid="uid://bmit4hu44tw4v" path="res://Mobs/MobScripts/mob_ground.gd" id="1_oy8sq"]
 [ext_resource type="Script" uid="uid://ceg8bj68uhu1n" path="res://Scripts/animated_sprite_2d_manager.gd" id="2_5o0n6"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" uid="uid://c0bnki1eabs44" path="res://Mobs/Enemies/EnemyStates/EnemyGroundStates/enemy_state_ground_wander.gd" id="4_dpfaa"]
 [ext_resource type="Script" uid="uid://bu3ukdjgw81yv" path="res://Mobs/Enemies/EnemyStates/EnemyGroundStates/enemy_state_ground_idle.gd" id="5_c7uiw"]
 [ext_resource type="SpriteFrames" uid="uid://njrgshpkuq2u" path="res://Mobs/Player/Animations/player_sword_animations.tres" id="6_oymlq"]
+[ext_resource type="SpriteFrames" uid="uid://b3kddcchjwtov" path="res://Mobs/Player/Animations/player_attack_slash.tres" id="7_p5wsd"]
 [ext_resource type="Script" uid="uid://7yimqqtjorwo" path="res://Mobs/MobScripts/StateMachine/state_singal_switcher.gd" id="10_5jue8"]
 [ext_resource type="Script" uid="uid://3ktsd5so667f" path="res://Components/ComponentScripts/detection_component.gd" id="10_60vwx"]
 [ext_resource type="Resource" uid="uid://bsxhtoexh1d1b" path="res://Mobs/Enemies/EnemyStates/EnemyGroundStates/enemy_state_switcher_to_chase.tres" id="11_20vrt"]
@@ -35,6 +36,7 @@ node_name = "HealthComponent"
 signal_name = "damaged"
 acceptable_states = Array[String](["Idle", "Wander", "Chase", "Attack", "Hit"])
 target_state = "Hit"
+no_msg = false
 metadata/_custom_type_script = "uid://7yimqqtjorwo"
 
 [sub_resource type="Resource" id="Resource_qvi60"]
@@ -45,17 +47,19 @@ metadata/_custom_type_script = "uid://bwr0nt83a3y2w"
 
 [node name="Mob" type="CharacterBody2D" node_paths=PackedStringArray("nodes_to_flip_pos", "nodes_to_flip_rot")]
 script = ExtResource("1_oy8sq")
-nodes_to_flip_pos = [NodePath("AttackComponent")]
+nodes_to_flip_pos = [NodePath("AttackComponent"), NodePath("CompositeAnimatedSprite2D/Slash")]
 nodes_to_flip_rot = [NodePath("VisionCone2D")]
 speed = 50
 metadata/_custom_type_script = "uid://b7ihlntb0uv6c"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-1, 0)
+unique_name_in_owner = true
+position = Vector2(-1, -8)
 shape = SubResource("RectangleShape2D_blfg1")
 
 [node name="HealthComponent" parent="." instance=ExtResource("2_qvi60")]
 unique_name_in_owner = true
+position = Vector2(0, -8)
 collision_layer = 2
 queue_free_on_death = true
 
@@ -64,7 +68,7 @@ shape = SubResource("RectangleShape2D_3bhtk")
 
 [node name="AttackComponent" parent="." instance=ExtResource("3_p5wsd")]
 unique_name_in_owner = true
-position = Vector2(9, 0)
+position = Vector2(9, -8)
 monitoring = false
 monitorable = false
 
@@ -73,6 +77,7 @@ shape = SubResource("RectangleShape2D_60vwx")
 
 [node name="CompositeAnimatedSprite2D" type="Node2D" parent="."]
 unique_name_in_owner = true
+position = Vector2(0, -8)
 script = ExtResource("2_5o0n6")
 metadata/_custom_type_script = "uid://ceg8bj68uhu1n"
 
@@ -86,8 +91,13 @@ modulate = Color(0.143371, 1, 0.815641, 1)
 sprite_frames = ExtResource("6_oymlq")
 animation = &"attack1"
 
+[node name="Slash" type="AnimatedSprite2D" parent="CompositeAnimatedSprite2D"]
+position = Vector2(8, 0)
+sprite_frames = ExtResource("7_p5wsd")
+
 [node name="EdgeDetectorComponent" parent="." instance=ExtResource("2_8qfpr")]
 unique_name_in_owner = true
+position = Vector2(0, -8)
 
 [node name="EdgeDetectorLeft" type="RayCast2D" parent="EdgeDetectorComponent"]
 position = Vector2(-15, -7)
@@ -99,11 +109,13 @@ target_position = Vector2(0, 20)
 
 [node name="DetectionComponent" type="Node2D" parent="." node_paths=PackedStringArray("vision_cone")]
 unique_name_in_owner = true
+position = Vector2(0, -8)
 script = ExtResource("10_60vwx")
 target_group = "ally"
 vision_cone = NodePath("../VisionCone2D")
 
 [node name="VisionCone2D" parent="." instance=ExtResource("11_e65rg")]
+position = Vector2(0, -8)
 angle_deg = 30
 ray_count = 10
 max_distance = 100.0

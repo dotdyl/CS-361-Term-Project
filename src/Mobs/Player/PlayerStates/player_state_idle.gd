@@ -18,5 +18,7 @@ func physics_update(delta: float):
 		state_machine.transition_to("Air", {do_jump = true})
 	elif Input.is_action_just_pressed("attack"):
 		state_machine.transition_to("Attack1", {from_zero = true})
+	elif Input.is_action_just_pressed("ranged_attack"):
+		state_machine.transition_to("RangedAttack")
 	elif not is_zero_approx(player.get_input_direction()):
 		state_machine.transition_to("Run")

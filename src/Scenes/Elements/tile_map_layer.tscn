@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://c858h605coc50"]
+
+[ext_resource type="TileSet" uid="uid://w07yhe46sn2y" path="res://Assets/Sprites/environment tileset.tres" id="1_wam4w"]
+
+[node name="TileMapLayer" type="TileMapLayer"]
+tile_set = ExtResource("1_wam4w")

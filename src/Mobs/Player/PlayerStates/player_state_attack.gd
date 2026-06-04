@@ -6,7 +6,8 @@ extends PlayerState
 @export var next_state : State
 
 @export var attack : Attack
-@export var attack_movement_burst : float = 10.0
+@export var attack_movement_burst : float = 30.0
+@export var from_zero : bool = false
 
 var action_pressed = false
 
@@ -22,11 +23,16 @@ func enter(msg := {}):
 	if msg.has("from_zero"):
 		player.velocity.x = 0
 		
-	player.velocity.x += attack_movement_burst * player.dir_facing
+	#player.velocity.x += attack_movement_burst * player.dir_facing
 	
 func physics_update(delta : float):
 	#if player.is_on_floor():
 		#player.velocity.x = lerp(player.velocity.x, attack_movement_burst * player.dir_facing, player.quick_step * delta)
+		
+	if player.sprite.frame <= 1:
+		player.velocity.x = lerp(player.velocity.x, attack_movement_burst * player.dir_facing, player.quick_step * delta)
+	else:
+		player.velocity.x = lerp(player.velocity.x, 0.0, player.friction * delta)
 		
 	if Input.is_action_just_pressed("attack"):
 		action_pressed = true
@@ -35,7 +41,7 @@ func physics_update(delta : float):
 		player.ready_for_input()
 		
 	if next_state and player.can_input and action_pressed:
-		state_machine.transition_to(next_state.name)
+		state_machine.transition_to(next_state.name, {"from_zero" : from_zero})
 		
 	if !player.sprite.is_playing() or player.get_input_direction() != 0.0:
 		state_machine.transition_to("Idle")

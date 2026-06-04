@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://bp2n684dsp7kq"]
+
+[ext_resource type="Script" uid="uid://dgqoqy5vy2tff" path="res://Components/ComponentScripts/interactable_component.gd" id="1_opbag"]
+[ext_resource type="Theme" uid="uid://b1sfqk8pt82jr" path="res://Assets/ui_theme.tres" id="2_tg4w3"]
+
+[node name="InteractableComponent" type="Area2D"]
+script = ExtResource("1_opbag")
+
+[node name="Label" type="Label" parent="."]
+unique_name_in_owner = true
+offset_left = -23.0
+offset_top = -16.0
+offset_right = 337.0
+offset_bottom = 34.0
+scale = Vector2(0.127437, 0.127437)
+theme = ExtResource("2_tg4w3")
+text = "'E' to Interact"
+horizontal_alignment = 1
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

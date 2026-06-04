@@ -1,0 +1,40 @@
+[gd_scene load_steps=5 format=3 uid="uid://hn562si0yfxo"]
+
+[ext_resource type="Texture2D" uid="uid://dyt5f7wxo7lnt" path="res://Assets/Sprites/effects spritesheet.png" id="1_kdtea"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6sug0"]
+atlas = ExtResource("1_kdtea")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vuoen"]
+atlas = ExtResource("1_kdtea")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_724ym"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6sug0")
+}],
+"loop": true,
+"name": &"broken",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vuoen")
+}],
+"loop": true,
+"name": &"full",
+"speed": 5.0
+}]
+
+[node name="HeartSymbol" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(48, 48)
+scale = Vector2(6, 6)
+sprite_frames = SubResource("SpriteFrames_724ym")
+animation = &"full"
