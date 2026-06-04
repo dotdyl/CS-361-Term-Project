@@ -1,0 +1,98 @@
+[gd_scene load_steps=18 format=3 uid="uid://cr3pq0sv70lnn"]
+
+[ext_resource type="Script" uid="uid://bmit4hu44tw4v" path="res://Mobs/MobScripts/mob_ground.gd" id="1_oy8sq"]
+[ext_resource type="Script" uid="uid://bhvh3ck3ypi5t" path="res://Components/ComponentScripts/health_component.gd" id="2_3bhtk"]
+[ext_resource type="Script" uid="uid://ceg8bj68uhu1n" path="res://Scripts/animated_sprite_2d_manager.gd" id="2_5o0n6"]
+[ext_resource type="PackedScene" uid="uid://cstci5cv3umkw" path="res://Components/edge_detector_component.tscn" id="2_8qfpr"]
+[ext_resource type="Script" uid="uid://bejo3dqbjcc7x" path="res://Components/ComponentScripts/attack_component.gd" id="2_bjay4"]
+[ext_resource type="Script" uid="uid://cekbh2v5ig1i0" path="res://Mobs/MobScripts/StateMachine/state_machine.gd" id="2_oy8sq"]
+[ext_resource type="SpriteFrames" uid="uid://b8lo6o2s84o1" path="res://Mobs/Player/Animations/player_character_animations.tres" id="3_3bhtk"]
+[ext_resource type="Script" uid="uid://c0bnki1eabs44" path="res://Mobs/Enemies/EnemyStates/EnemyGroundStates/enemy_state_ground_wander.gd" id="4_dpfaa"]
+[ext_resource type="Script" uid="uid://bu3ukdjgw81yv" path="res://Mobs/Enemies/EnemyStates/EnemyGroundStates/enemy_state_ground_idle.gd" id="5_c7uiw"]
+[ext_resource type="Script" uid="uid://7yimqqtjorwo" path="res://Mobs/MobScripts/StateMachine/state_singal_switcher.gd" id="10_5jue8"]
+[ext_resource type="Script" uid="uid://3ktsd5so667f" path="res://Components/ComponentScripts/detection_component.gd" id="10_60vwx"]
+[ext_resource type="Resource" uid="uid://bsxhtoexh1d1b" path="res://Mobs/Enemies/EnemyStates/EnemyGroundStates/enemy_state_switcher_to_chase.tres" id="11_20vrt"]
+[ext_resource type="PackedScene" uid="uid://kf8tqdlm8c5t" path="res://Addons/vision_cone_2d/vision_cone_2d.tscn" id="11_e65rg"]
+[ext_resource type="Script" uid="uid://duqoh2d60i3xx" path="res://Mobs/Enemies/EnemyStates/EnemyGroundStates/enemy_state_ground_chase.gd" id="14_jse14"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_blfg1"]
+size = Vector2(8, 4)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_60vwx"]
+size = Vector2(16, 12)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3bhtk"]
+size = Vector2(16, 16)
+
+[node name="Mob" type="CharacterBody2D" node_paths=PackedStringArray("nodes_to_flip_pos", "nodes_to_flip_rot")]
+script = ExtResource("1_oy8sq")
+nodes_to_flip_pos = [NodePath("AttackComponent")]
+nodes_to_flip_rot = [NodePath("VisionCone2D")]
+speed = 50
+metadata/_custom_type_script = "uid://b7ihlntb0uv6c"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 6)
+shape = SubResource("RectangleShape2D_blfg1")
+
+[node name="AttackComponent" type="Area2D" parent="."]
+position = Vector2(10, 0)
+script = ExtResource("2_bjay4")
+metadata/_custom_type_script = "uid://bejo3dqbjcc7x"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackComponent"]
+shape = SubResource("RectangleShape2D_60vwx")
+
+[node name="HealthComponent" type="Area2D" parent="."]
+script = ExtResource("2_3bhtk")
+metadata/_custom_type_script = "uid://bhvh3ck3ypi5t"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HealthComponent"]
+shape = SubResource("RectangleShape2D_3bhtk")
+
+[node name="CompositveAnimatedSprite2D" type="Node2D" parent="."]
+unique_name_in_owner = true
+script = ExtResource("2_5o0n6")
+metadata/_custom_type_script = "uid://ceg8bj68uhu1n"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CompositveAnimatedSprite2D"]
+modulate = Color(0.544177, 0.99596, 0, 1)
+sprite_frames = ExtResource("3_3bhtk")
+animation = &"run"
+
+[node name="EdgeDetectorComponent" parent="." instance=ExtResource("2_8qfpr")]
+unique_name_in_owner = true
+
+[node name="EdgeDetectorLeft" type="RayCast2D" parent="EdgeDetectorComponent"]
+position = Vector2(-15, -7)
+target_position = Vector2(0, 20)
+
+[node name="EdgeDetectorRight" type="RayCast2D" parent="EdgeDetectorComponent"]
+position = Vector2(15, -7)
+target_position = Vector2(0, 20)
+
+[node name="DetectionComponent" type="Node2D" parent="." node_paths=PackedStringArray("vision_cone")]
+unique_name_in_owner = true
+script = ExtResource("10_60vwx")
+max_distance = 150.0
+vision_cone = NodePath("../VisionCone2D")
+
+[node name="VisionCone2D" parent="." instance=ExtResource("11_e65rg")]
+angle_deg = 30
+ray_count = 10
+max_distance = 100.0
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("2_oy8sq")
+state_signal_switchers = Array[ExtResource("10_5jue8")]([ExtResource("11_20vrt")])
+initial_state = NodePath("Idle")
+metadata/_custom_type_script = "uid://cekbh2v5ig1i0"
+
+[node name="Wander" type="Node" parent="StateMachine"]
+script = ExtResource("4_dpfaa")
+
+[node name="Idle" type="Node" parent="StateMachine"]
+script = ExtResource("5_c7uiw")
+
+[node name="Chase" type="Node" parent="StateMachine"]
+script = ExtResource("14_jse14")

@@ -1,0 +1,60 @@
+[gd_scene load_steps=9 format=3 uid="uid://5uw533j7l0lk"]
+
+[ext_resource type="PackedScene" uid="uid://jaa1h8imkys0" path="res://Mobs/Player/player_entity.tscn" id="1_syob8"]
+[ext_resource type="PackedScene" uid="uid://cr3pq0sv70lnn" path="res://Mobs/Enemies/Basic/slime.tscn" id="2_hp5jh"]
+[ext_resource type="Script" uid="uid://d0yha6t1r1ibw" path="res://Scripts/ai_grid_flow_field.gd" id="3_kcxnf"]
+[ext_resource type="PackedScene" uid="uid://gi28vnv7a864" path="res://Classes/ai_grid_flow_field_node.tscn" id="4_q6koc"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kcxnf"]
+size = Vector2(456, 27)
+
+[sub_resource type="QuadMesh" id="QuadMesh_syob8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hp5jh"]
+size = Vector2(66, 10)
+
+[sub_resource type="QuadMesh" id="QuadMesh_hp5jh"]
+
+[node name="Testing" type="Node2D"]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." groups=["floor"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(-5, 13.5)
+shape = SubResource("RectangleShape2D_kcxnf")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="StaticBody2D"]
+position = Vector2(-4.99999, 14)
+scale = Vector2(456, 28)
+mesh = SubResource("QuadMesh_syob8")
+
+[node name="PlayerEntity" parent="." instance=ExtResource("1_syob8")]
+position = Vector2(-188, -19)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(-2, -102)
+zoom = Vector2(1.66, 1.66)
+
+[node name="Mob" parent="." instance=ExtResource("2_hp5jh")]
+position = Vector2(-67, -8)
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="." groups=["floor"]]
+position = Vector2(140, -40)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2"]
+position = Vector2(0, 5)
+shape = SubResource("RectangleShape2D_hp5jh")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="StaticBody2D2"]
+position = Vector2(0, 5)
+scale = Vector2(66, 10)
+mesh = SubResource("QuadMesh_hp5jh")
+
+[node name="AiGridFlowField" type="Node2D" parent="." node_paths=PackedStringArray("target_node")]
+position = Vector2(-300, -245)
+script = ExtResource("3_kcxnf")
+width = 30
+height = 30
+node_dist = 20
+node_scene = ExtResource("4_q6koc")
+target_node = NodePath("../PlayerEntity")

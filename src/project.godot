@@ -11,13 +11,21 @@ config_version=5
 [application]
 
 config/name="src"
-run/main_scene="uid://fkyo8uej76r5"
+run/main_scene="uid://5uw533j7l0lk"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
+
+[debug]
+
+settings/snap/snap_2d_transforms_to_pixel=false
 
 [display]
 
 window/stretch/mode="viewport"
+
+[global_group]
+
+floor=""
 
 [input]
 
