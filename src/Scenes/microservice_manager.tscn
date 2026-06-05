@@ -5,3 +5,9 @@
 [node name="MicroserviceManager" type="Node"]
 script = ExtResource("1_b52ab")
 microservice_app_names = Array[String](["daily_number.exe"])
+
+[node name="HTTPRequest1" type="HTTPRequest" parent="."]
+unique_name_in_owner = true
+
+[node name="HTTPRequest2" type="HTTPRequest" parent="."]
+unique_name_in_owner = true

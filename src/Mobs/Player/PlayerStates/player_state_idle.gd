@@ -13,9 +13,12 @@ func physics_update(delta: float):
 
 	if Input.is_action_just_pressed("dash"):
 		state_machine.transition_to("Dash")
-
+	elif Input.is_action_just_pressed("note"):
+		state_machine.transition_to("LeaveNote")
 	if Input.is_action_just_pressed("up"):
 		state_machine.transition_to("Air", {do_jump = true})
+	elif Input.is_action_just_pressed("down"):
+		state_machine.transition_to("Down")
 	elif Input.is_action_just_pressed("attack"):
 		state_machine.transition_to("Attack1", {from_zero = true})
 	elif Input.is_action_just_pressed("ranged_attack"):

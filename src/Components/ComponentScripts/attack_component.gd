@@ -21,7 +21,6 @@ func _ready() -> void:
 		auto_attack_timer.timeout.connect(_auto_attack)
 
 func _on_area_entered(area):
-	if projectile: print("fireball area entered")
 	var direction
 	if !projectile:
 		direction = (parent.global_position - area.global_position).normalized()

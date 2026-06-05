@@ -1,0 +1,44 @@
+[gd_scene load_steps=8 format=3 uid="uid://dxxnj3bmf4t7l"]
+
+[ext_resource type="Script" uid="uid://d1l4lgaeqxo4l" path="res://Objects/sign.gd" id="1_xxyl4"]
+[ext_resource type="Script" uid="uid://ceg8bj68uhu1n" path="res://Scripts/animated_sprite_2d_manager.gd" id="2_858ni"]
+[ext_resource type="Texture2D" uid="uid://c8i7qdngonvri" path="res://Assets/Sprites/Environment Tileset.png" id="3_a2jc2"]
+[ext_resource type="PackedScene" uid="uid://bp2n684dsp7kq" path="res://Components/interactable_component.tscn" id="4_y762b"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_okjwl"]
+atlas = ExtResource("3_a2jc2")
+region = Rect2(112, 16, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0q2r6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_okjwl")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7pn5x"]
+size = Vector2(48, 32)
+
+[node name="Note" type="Node2D"]
+script = ExtResource("1_xxyl4")
+
+[node name="CompositeAnimatedSprite2D" type="Node2D" parent="."]
+unique_name_in_owner = true
+script = ExtResource("2_858ni")
+metadata/_custom_type_script = "uid://ceg8bj68uhu1n"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CompositeAnimatedSprite2D"]
+position = Vector2(0, -8)
+sprite_frames = SubResource("SpriteFrames_0q2r6")
+
+[node name="InteractableComponent" parent="." instance=ExtResource("4_y762b")]
+unique_name_in_owner = true
+position = Vector2(0, -8)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractableComponent"]
+position = Vector2(0, -8)
+shape = SubResource("RectangleShape2D_7pn5x")

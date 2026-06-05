@@ -1,4 +1,5 @@
 extends LevelObject
+class_name Sign
 
 @onready var interactable_component: InteractableComponent = %InteractableComponent
 

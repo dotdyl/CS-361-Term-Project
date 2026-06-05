@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=4 uid="uid://dxqkg0d3l6r1n"]
+
+[ext_resource type="PackedScene" uid="uid://c858h605coc50" path="res://Scenes/Elements/tile_map_layer.tscn" id="1_qn6k6"]
+[ext_resource type="SpriteFrames" uid="uid://b8lo6o2s84o1" path="res://Mobs/Player/Animations/player_character_animations.tres" id="2_5jpvg"]
+[ext_resource type="Script" uid="uid://btw4s35ysfq7p" path="res://Scenes/Menus/menu_sprite.gd" id="3_4g2y6"]
+[ext_resource type="SpriteFrames" uid="uid://njrgshpkuq2u" path="res://Mobs/Player/Animations/player_sword_animations.tres" id="4_k4m43"]
+
+[node name="MainMenuDiorama1" type="Node2D"]
+
+[node name="Others" parent="." instance=ExtResource("1_qn6k6")]
+tile_map_data = PackedByteArray("AAAKAAUAAAAAAAAAAAAIAAQAAAAAAAAAAAALAAMAAAAAAAAAAAALAAIAAAABAAEAAAAJAAYAAAAFAAAAAAAHAAYAAAAFAAAAAAAIAAYAAAAFAAAAAAAMAAYAAAADAAEAAAA=")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." node_paths=PackedStringArray("buddies")]
+position = Vector2(168, 72)
+sprite_frames = ExtResource("2_5jpvg")
+animation = &"idle"
+flip_h = true
+script = ExtResource("3_4g2y6")
+anim_names = Array[String](["idle"])
+buddies = [NodePath("../AnimatedSprite2D2")]
+
+[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="."]
+position = Vector2(168, 72)
+sprite_frames = ExtResource("4_k4m43")
+animation = &"idle"
+flip_h = true
+script = ExtResource("3_4g2y6")
+anim_names = Array[String](["idle"])
+is_buddy = true

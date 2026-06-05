@@ -12,8 +12,7 @@ func _ready() -> void:
 
 func open():
 	sprite.play("open")
-	while garunteed_contents_count > 0:
-		print(potential_contents)
+	while garunteed_contents_count > 0 && potential_contents.size() > 0:
 		var loot = potential_contents.pick_random().instantiate() as Item
 		get_tree().current_scene.call_deferred("add_child", loot)
 		loot.global_position = global_position

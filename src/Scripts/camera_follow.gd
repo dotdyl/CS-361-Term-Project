@@ -7,7 +7,6 @@ extends Camera2D
 func _process(delta):
 	
 	var yDist = abs(global_position.y - target.global_position.y)
-	#print(yDist)
 	
 	if yDist > threshold:
 		var targetY = global_position.y - threshold

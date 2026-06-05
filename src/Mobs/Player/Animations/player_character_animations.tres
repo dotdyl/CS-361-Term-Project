@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=24 format=3 uid="uid://b8lo6o2s84o1"]
+[gd_resource type="SpriteFrames" load_steps=25 format=3 uid="uid://b8lo6o2s84o1"]
 
 [ext_resource type="Texture2D" uid="uid://cfqsxkmpfxags" path="res://Assets/Sprites/Lil Knight Guy Spritesheet.png" id="1_u2tv7"]
 
@@ -59,6 +59,10 @@ atlas = ExtResource("1_u2tv7")
 region = Rect2(0, 48, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_f37nq"]
+atlas = ExtResource("1_u2tv7")
+region = Rect2(16, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yxt5e"]
 atlas = ExtResource("1_u2tv7")
 region = Rect2(16, 48, 16, 16)
 
@@ -165,6 +169,14 @@ animations = [{
 "loop": false,
 "name": &"dash",
 "speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yxt5e")
+}],
+"loop": true,
+"name": &"dead",
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,

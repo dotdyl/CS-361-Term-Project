@@ -11,7 +11,6 @@ var timer : SceneTreeTimer
 
 func enter(msg := {}):
 	
-	print("hit!")
 	enemy.sprite.play("jump")
 	enemy.sprite.flash()
 	timer = get_tree().create_timer(staggered_time)
@@ -23,12 +22,10 @@ func enter(msg := {}):
 	if msg.has("direction") && msg.has("knockback"):
 		direction = msg["direction"]
 		knockback = msg["knockback"]
-		print(direction)
 		var knockback_dir := Vector2.RIGHT
 		if direction.x > 0:
 			knockback_dir = Vector2.LEFT
 		enemy.velocity += knockback * knockback_dir
-		print("applying knockback!")
 
 func exit_stagger():
 	

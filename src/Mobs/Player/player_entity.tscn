@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://jaa1h8imkys0"]
+[gd_scene load_steps=34 format=3 uid="uid://jaa1h8imkys0"]
 
 [ext_resource type="Script" uid="uid://dkjh3ywfivkdy" path="res://Mobs/MobScripts/mob_controllable.gd" id="1_ey1bj"]
 [ext_resource type="Script" uid="uid://ceg8bj68uhu1n" path="res://Scripts/animated_sprite_2d_manager.gd" id="2_b2c60"]
@@ -23,6 +23,9 @@
 [ext_resource type="PackedScene" uid="uid://byiycfo16i6ew" path="res://Scenes/Elements/ui_manager.tscn" id="21_bll2i"]
 [ext_resource type="Script" uid="uid://cyicflq5mimg0" path="res://Mobs/Player/PlayerStates/player_state_ranged_attack.gd" id="22_l57ek"]
 [ext_resource type="Script" uid="uid://chpwl1ykmqs4m" path="res://Components/ComponentScripts/mana_component.gd" id="22_rnok6"]
+[ext_resource type="Script" uid="uid://cv5ksh3bi0tgi" path="res://Mobs/Player/player_state_down.gd" id="23_tbc46"]
+[ext_resource type="Script" uid="uid://cb2l1rx3egouy" path="res://Mobs/Player/PlayerStates/player_state_dead.gd" id="24_b2uix"]
+[ext_resource type="Script" uid="uid://fjpeyqxug2t" path="res://Mobs/Player/PlayerStates/player_state_leave_note.gd" id="25_u6f4p"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_170cn"]
 size = Vector2(6, 16)
@@ -52,6 +55,15 @@ target_state = "Hit"
 no_msg = false
 metadata/_custom_type_script = "uid://7yimqqtjorwo"
 
+[sub_resource type="Resource" id="Resource_tbc46"]
+script = ExtResource("9_we8h8")
+node_name = "HealthComponent"
+signal_name = "on_death"
+acceptable_states = Array[String]([])
+target_state = "Dead"
+no_msg = true
+metadata/_custom_type_script = "uid://7yimqqtjorwo"
+
 [node name="PlayerEntity" type="CharacterBody2D" node_paths=PackedStringArray("nodes_to_flip_pos") groups=["ally"]]
 collision_layer = 17
 collision_mask = 17
@@ -70,11 +82,11 @@ script = ExtResource("2_b2c60")
 
 [node name="Character" type="AnimatedSprite2D" parent="CompositeAnimatedSprite2D"]
 sprite_frames = ExtResource("3_wcmd6")
-animation = &"attack3"
+animation = &"dead"
 
 [node name="Sword" type="AnimatedSprite2D" parent="CompositeAnimatedSprite2D"]
 sprite_frames = ExtResource("4_f37nq")
-animation = &"attack1"
+animation = &"dead"
 
 [node name="Slash" type="AnimatedSprite2D" parent="CompositeAnimatedSprite2D"]
 position = Vector2(8, 0)
@@ -87,6 +99,7 @@ script = ExtResource("22_rnok6")
 unique_name_in_owner = true
 position = Vector2(0, -8)
 collision_layer = 1
+max_health = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HealthComponent"]
 shape = SubResource("RectangleShape2D_0mfeu")
@@ -115,7 +128,7 @@ tile_map_detector_signals = Array[ExtResource("10_nvumq")]([SubResource("Resourc
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state", "state_label")]
 script = ExtResource("6_x1vuv")
-state_signal_switchers = Array[ExtResource("9_we8h8")]([SubResource("Resource_8g0s3")])
+state_signal_switchers = Array[ExtResource("9_we8h8")]([SubResource("Resource_8g0s3"), SubResource("Resource_tbc46")])
 initial_state = NodePath("Idle")
 state_label = NodePath("../StateLabel")
 
@@ -160,8 +173,18 @@ staggered_time = 0.1
 script = ExtResource("22_l57ek")
 mana_component = NodePath("../../ManaComponent")
 
+[node name="Down" type="Node" parent="StateMachine" node_paths=PackedStringArray("tile_map_detector")]
+script = ExtResource("23_tbc46")
+tile_map_detector = NodePath("../../TilemapDetector")
+y_dist = 15.0
+
+[node name="Dead" type="Node" parent="StateMachine"]
+script = ExtResource("24_b2uix")
+
+[node name="LeaveNote" type="Node" parent="StateMachine"]
+script = ExtResource("25_u6f4p")
+
 [node name="StateLabel" type="Label" parent="."]
-visible = false
 offset_left = -11.0
 offset_top = -14.0
 offset_right = 677.0
@@ -171,5 +194,6 @@ theme_override_font_sizes/font_size = 106
 text = "Current State"
 
 [node name="CanvasLayer" parent="." node_paths=PackedStringArray("health_component", "mana_component") instance=ExtResource("21_bll2i")]
+unique_name_in_owner = true
 health_component = NodePath("../HealthComponent")
 mana_component = NodePath("../ManaComponent")

@@ -41,7 +41,6 @@ func _physics_process(delta: float):
 func transition_to(target_state_name: String, msg := {}):
 	
 	if not has_node(target_state_name):
-		#print("Can't find state with target namea")
 		return
 		
 	if state_label:
@@ -50,22 +49,17 @@ func transition_to(target_state_name: String, msg := {}):
 	state.exit()
 	state = get_node(target_state_name)
 	state.enter(msg)
-	#print("State transitioned to ", state.name)
 	emit_signal("transitioned", state.name)
 
 func state_signal_switch(msg : Dictionary, acceptable_states : Array[String], target_state_name : String):
 	
-	#print("State switch from signald")
 	if !acceptable_states.has(state.name) and acceptable_states.size() != 0:
-		#print("Can't force switch from this state")
 		return
 		
 	transition_to(target_state_name, msg)
 
 func state_signal_switch_no_msg(acceptable_states : Array[String], target_state_name : String):
-	#print("State switch from signald")
 	if !acceptable_states.has(state.name) and acceptable_states.size() != 0:
-		#print("Can't force switch from this state")
 		return
 		
 	transition_to(target_state_name)

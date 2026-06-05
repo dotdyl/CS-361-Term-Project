@@ -1,0 +1,90 @@
+[gd_scene load_steps=10 format=3 uid="uid://cc7h8rnltxhhf"]
+
+[ext_resource type="PackedScene" uid="uid://c858h605coc50" path="res://Scenes/Elements/tile_map_layer.tscn" id="1_eisis"]
+[ext_resource type="SpriteFrames" uid="uid://b8lo6o2s84o1" path="res://Mobs/Player/Animations/player_character_animations.tres" id="2_hisvc"]
+[ext_resource type="Script" uid="uid://btw4s35ysfq7p" path="res://Scenes/Menus/menu_sprite.gd" id="3_acsmk"]
+[ext_resource type="SpriteFrames" uid="uid://njrgshpkuq2u" path="res://Mobs/Player/Animations/player_sword_animations.tres" id="4_y0xut"]
+[ext_resource type="SpriteFrames" uid="uid://b3kddcchjwtov" path="res://Mobs/Player/Animations/player_attack_slash.tres" id="5_wxu1y"]
+[ext_resource type="Texture2D" uid="uid://bs6q1bvjgctof" path="res://Assets/Sprites/Enemies Spritesheet.png" id="6_mvbg3"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4fgt5"]
+atlas = ExtResource("6_mvbg3")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j4kqa"]
+atlas = ExtResource("6_mvbg3")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_anmaw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4fgt5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j4kqa")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[node name="MainMenuDiorama1" type="Node2D"]
+
+[node name="Others" parent="." instance=ExtResource("1_eisis")]
+tile_map_data = PackedByteArray(0, 0, 12, 0, 4, 0, 0, 0, 6, 0, 0, 0, 0, 0, 11, 0, 4, 0, 0, 0, 6, 0, 0, 0, 0, 0, 11, 0, 6, 0, 0, 0, 7, 0, 0, 0, 0, 0, 7, 0, 6, 0, 0, 0, 3, 0, 1, 0, 0, 0)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." node_paths=PackedStringArray("buddies")]
+position = Vector2(136, 104)
+sprite_frames = ExtResource("2_hisvc")
+animation = &"idle"
+flip_h = true
+script = ExtResource("3_acsmk")
+anim_names = Array[String](["idle"])
+buddies = [NodePath("../AnimatedSprite2D2")]
+
+[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="."]
+position = Vector2(136, 104)
+sprite_frames = ExtResource("4_y0xut")
+animation = &"idle"
+flip_h = true
+script = ExtResource("3_acsmk")
+anim_names = Array[String](["idle"])
+is_buddy = true
+
+[node name="AnimatedSprite2D3" type="AnimatedSprite2D" parent="." node_paths=PackedStringArray("buddies")]
+modulate = Color(0.145098, 1, 0.815686, 1)
+position = Vector2(192, 56)
+sprite_frames = ExtResource("2_hisvc")
+animation = &"idle"
+flip_h = true
+script = ExtResource("3_acsmk")
+anim_names = Array[String](["attack1", "attack2", "attack3"])
+buddies = [NodePath("../AnimatedSprite2D4"), NodePath("../AnimatedSprite2D5")]
+
+[node name="AnimatedSprite2D4" type="AnimatedSprite2D" parent="."]
+modulate = Color(0.145098, 1, 0.815686, 1)
+position = Vector2(192, 56)
+sprite_frames = ExtResource("4_y0xut")
+animation = &"idle"
+flip_h = true
+script = ExtResource("3_acsmk")
+anim_names = Array[String](["attack1", "attack2", "attack3"])
+is_buddy = true
+
+[node name="AnimatedSprite2D5" type="AnimatedSprite2D" parent="."]
+position = Vector2(184, 56)
+sprite_frames = ExtResource("5_wxu1y")
+animation = &"idle"
+flip_h = true
+script = ExtResource("3_acsmk")
+anim_names = Array[String](["attack1", "attack2", "attack3"])
+is_buddy = true
+
+[node name="AnimatedSprite2D6" type="AnimatedSprite2D" parent="."]
+position = Vector2(120, 48)
+sprite_frames = SubResource("SpriteFrames_anmaw")
+animation = &"idle"
+flip_h = true
+script = ExtResource("3_acsmk")
+anim_names = Array[String](["idle"])

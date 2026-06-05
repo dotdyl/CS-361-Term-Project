@@ -26,12 +26,13 @@ func check_health_status():
 		on_death.emit()
 	
 func disable():
-	monitorable = false
+	set_deferred("monitorable", false)
 
 func enable():
-	monitorable = true
+	set_deferred("monitorable", true)
 		
 func _on_death():
+	disable()
 	if queue_free_on_death:
 		parent.queue_free()
 	
@@ -56,7 +57,6 @@ func simple_damage(damage : int):
 	
 func take_damage(attack : Attack, attacker : Node, attack_direction : Vector2):
 	
-	print("damaged")
 	damaged.emit({"attacker" : attacker, "direction" : attack_direction, "knockback" : attack.knockback})
 	adjust_ui.emit(-attack.damage)
 	health -= attack.damage

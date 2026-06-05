@@ -1,0 +1,69 @@
+[gd_scene load_steps=6 format=4 uid="uid://d4alaqw210ncl"]
+
+[ext_resource type="PackedScene" uid="uid://c858h605coc50" path="res://Scenes/Elements/tile_map_layer.tscn" id="1_txn6d"]
+[ext_resource type="SpriteFrames" uid="uid://b8lo6o2s84o1" path="res://Mobs/Player/Animations/player_character_animations.tres" id="2_lt7gi"]
+[ext_resource type="Script" uid="uid://btw4s35ysfq7p" path="res://Scenes/Menus/menu_sprite.gd" id="3_glv0g"]
+[ext_resource type="SpriteFrames" uid="uid://njrgshpkuq2u" path="res://Mobs/Player/Animations/player_sword_animations.tres" id="4_2u778"]
+[ext_resource type="SpriteFrames" uid="uid://b3kddcchjwtov" path="res://Mobs/Player/Animations/player_attack_slash.tres" id="5_eshx0"]
+
+[node name="MainMenuDiorama1" type="Node2D"]
+
+[node name="Others" parent="." instance=ExtResource("1_txn6d")]
+tile_map_data = PackedByteArray("AAAGAAQAAAAGAAAAAAAHAAQAAAAGAAAAAAAIAAQAAAAGAAAAAAAGAAMAAAABAAEAAAAMAAUAAAAGAAAAAAALAAUAAAAGAAAAAAA=")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." node_paths=PackedStringArray("buddies")]
+position = Vector2(128, 104)
+sprite_frames = ExtResource("2_lt7gi")
+animation = &"idle"
+script = ExtResource("3_glv0g")
+anim_names = Array[String](["attack1", "attack2", "attack3"])
+idle_buffer_high = 2.0
+idle_buffer_low = 1
+buddies = [NodePath("../AnimatedSprite2D2"), NodePath("../AnimatedSprite2D7")]
+
+[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="."]
+position = Vector2(128, 104)
+sprite_frames = ExtResource("4_2u778")
+animation = &"idle"
+script = ExtResource("3_glv0g")
+anim_names = Array[String](["idle"])
+is_buddy = true
+
+[node name="AnimatedSprite2D7" type="AnimatedSprite2D" parent="."]
+position = Vector2(136, 104)
+sprite_frames = ExtResource("5_eshx0")
+animation = &"idle"
+script = ExtResource("3_glv0g")
+anim_names = Array[String](["attack1", "attack2", "attack3"])
+is_buddy = true
+
+[node name="AnimatedSprite2D3" type="AnimatedSprite2D" parent="." node_paths=PackedStringArray("buddies")]
+modulate = Color(0.145098, 1, 0.815686, 1)
+position = Vector2(152, 104)
+sprite_frames = ExtResource("2_lt7gi")
+animation = &"idle"
+flip_h = true
+script = ExtResource("3_glv0g")
+anim_names = Array[String](["attack1", "attack2", "attack3"])
+idle_buffer_high = 2.0
+idle_buffer_low = 1
+buddies = [NodePath("../AnimatedSprite2D4"), NodePath("../AnimatedSprite2D5")]
+
+[node name="AnimatedSprite2D4" type="AnimatedSprite2D" parent="."]
+modulate = Color(0.145098, 1, 0.815686, 1)
+position = Vector2(152, 104)
+sprite_frames = ExtResource("4_2u778")
+animation = &"idle"
+flip_h = true
+script = ExtResource("3_glv0g")
+anim_names = Array[String](["attack1", "attack2", "attack3"])
+is_buddy = true
+
+[node name="AnimatedSprite2D5" type="AnimatedSprite2D" parent="."]
+position = Vector2(144, 104)
+sprite_frames = ExtResource("5_eshx0")
+animation = &"idle"
+flip_h = true
+script = ExtResource("3_glv0g")
+anim_names = Array[String](["attack1", "attack2", "attack3"])
+is_buddy = true

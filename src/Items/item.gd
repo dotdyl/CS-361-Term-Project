@@ -19,7 +19,6 @@ func spawn():
 	tween.tween_property(self, "global_position:x", final_pos.x, duration).set_trans(Tween.TRANS_LINEAR)
 	
 	var peak_height = global_position.y - height
-	print(peak_height, final_pos.y)
 	
 	tween.tween_property(self, "global_position:y", peak_height, duration/2.0).set_trans(Tween.TRANS_QUAD)
 	tween.chain().tween_property(self, "global_position:y", final_pos.y, duration/2.0).set_trans(Tween.TRANS_QUAD)

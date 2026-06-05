@@ -26,20 +26,19 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	get_tile_map_cell()
 
-func get_tile_map_cell():
-	var cell = tile_map_layer.local_to_map(tile_map_layer.to_local(global_position))
+func get_tile_map_cell(offset := Vector2.ZERO, emit : bool = true) -> TileData:
+	var cell = tile_map_layer.local_to_map(tile_map_layer.to_local(global_position) + offset)
 	var custom_data = tile_map_layer.get_cell_tile_data(cell)
 	
-	if current_cell == custom_data: return 
+	if current_cell == custom_data: return current_cell
 	else: current_cell = custom_data
 	
-	if !custom_data:
-		return
-	
-	for d_signal in detector_signals:
-		var data_name = d_signal.get_name()
-		if custom_data.has_custom_data(data_name):
-			var data = custom_data.get_custom_data(data_name)
-			if data:
-				d_signal.emit(custom_data.get_custom_data(data_name))
-				print("emitted!")
+	if emit and custom_data:
+		for d_signal in detector_signals:
+			var data_name = d_signal.get_name()
+			if custom_data.has_custom_data(data_name):
+				var data = custom_data.get_custom_data(data_name)
+				if data:
+					d_signal.emit(custom_data.get_custom_data(data_name))
+					
+	return custom_data

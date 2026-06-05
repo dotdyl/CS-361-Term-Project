@@ -17,11 +17,9 @@ extends CharacterBody2D
 @onready var rot_start = rotation
 
 func _on_vision_cone_area_body_entered(body: Node2D) -> void:
-	# print("%s is seeing %s" % [self, body])
 	vision_renderer.color = alert_color
 
 func _on_vision_cone_area_body_exited(body: Node2D) -> void:
-	# print("%s stopped seeing %s" % [self, body])
 	vision_renderer.color = original_color
 
 func _physics_process(delta: float) -> void:
